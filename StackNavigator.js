@@ -5,21 +5,21 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import PickUpScreen from "./screens/PickUpScreen";
 import CartScreen from "./screens/CartScreen";
-// import LoginScreen from "./screens/LoginScreen";
-// import RegisterScreen from "./screens/RegisterScreen";
-// import ProfileScreen from "./screens/ProfileScreen";
-// import OrderScreen from "./screens/OrderScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import OrderScreen from "./screens/OrderScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={LoginScreen}
           options={{ headerShown: false }}
-        /> */}
+        />
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -30,14 +30,11 @@ const StackNavigator = () => {
           component={PickUpScreen}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="Cart"
           component={CartScreen}
           options={{ headerShown: false }}
         />
-
-        {/*
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
@@ -52,7 +49,7 @@ const StackNavigator = () => {
           name="Order"
           component={OrderScreen}
           options={{ headerShown: false }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

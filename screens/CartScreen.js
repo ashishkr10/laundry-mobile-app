@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,6 +9,8 @@ import {
   incrementQuantity,
 } from "../CardReducer";
 import { decrementQty, incrementQty } from "../ProductReducer";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const CartScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
@@ -26,6 +21,23 @@ const CartScreen = () => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
+
+  const userUid = auth.currentUser.uid;
+
+  const placeOrder = async () => {
+    navigation.navigate("Order");
+    dispatch(cleanCart());
+    await setDoc(
+      doc(db, "users", `${userUid}`),
+      {
+        orders: { ...cart },
+        pickUpDetails: route.params,
+      },
+      {
+        merge: true,
+      }
+    );
+  };
 
   return (
     <>
@@ -346,7 +358,7 @@ const CartScreen = () => {
             </Text>
           </View>
 
-          <Pressable>
+          <Pressable onPress={placeOrder}>
             <Text style={{ fontSize: 17, fontWeight: "600", color: "white" }}>
               Place Order
             </Text>
