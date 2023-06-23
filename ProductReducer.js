@@ -21,17 +21,18 @@ export const productSlice = createSlice({
       );
       if (itemPresent.quantity == 1) {
         itemPresent.quantity = 0;
-        const removeItem = state.product.filter(
-          (item) => item.id !== action.payload.id
-        );
-        state.cart = removeItem;
       } else {
         itemPresent.quantity--;
       }
     },
+    cleanProduct: (state) => {
+      const change = state.product.map((obj, i) => ({ ...obj, quantity: 0 }));
+      state.product = change;
+    },
   },
 });
 
-export const { getProducts, incrementQty, decrementQty } = productSlice.actions;
+export const { getProducts, incrementQty, decrementQty, cleanProduct } =
+  productSlice.actions;
 
 export default productSlice.reducer;

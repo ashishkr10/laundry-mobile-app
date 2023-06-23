@@ -8,7 +8,7 @@ import {
   decrementQuantity,
   incrementQuantity,
 } from "../CardReducer";
-import { decrementQty, incrementQty } from "../ProductReducer";
+import { cleanProduct, decrementQty, incrementQty } from "../ProductReducer";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 
@@ -26,6 +26,7 @@ const CartScreen = () => {
 
   const placeOrder = async () => {
     navigation.navigate("Order");
+    dispatch(cleanProduct());
     dispatch(cleanCart());
     await setDoc(
       doc(db, "users", `${userUid}`),
