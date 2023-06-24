@@ -65,6 +65,19 @@ const CartScreen = () => {
               <Text>Your Bucket</Text>
             </View>
 
+            <View>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "500",
+                  marginHorizontal: 10,
+                  marginVertical: 10,
+                }}
+              >
+                Cart Details
+              </Text>
+            </View>
+
             <Pressable
               style={{
                 backgroundColor: "white",
@@ -80,7 +93,7 @@ const CartScreen = () => {
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    marginVertical: 12,
+                    marginVertical: 10,
                   }}
                   key={index}
                 >
@@ -151,7 +164,7 @@ const CartScreen = () => {
                   </Pressable>
 
                   <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                    ${item.price * item.quantity}
+                    ₹ {item.price * item.quantity}
                   </Text>
                 </View>
               ))}
@@ -182,7 +195,7 @@ const CartScreen = () => {
                     Item Total
                   </Text>
                   <Text style={{ fontSize: 18, fontWeight: "400" }}>
-                    ₹{total}
+                    ₹ {total}
                   </Text>
                 </View>
 
@@ -192,6 +205,29 @@ const CartScreen = () => {
                     alignItems: "center",
                     justifyContent: "space-between",
                     marginVertical: 8,
+                  }}
+                >
+                  <Text
+                    style={{ fontSize: 18, fontWeight: "400", color: "gray" }}
+                  >
+                    Service Fee
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "400",
+                      color: "#088F8F",
+                    }}
+                  >
+                    ₹ 50
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
                   <Text
@@ -210,7 +246,13 @@ const CartScreen = () => {
                   </Text>
                 </View>
 
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginVertical: 8,
+                  }}
+                >
                   <Text
                     style={{ fontSize: 18, fontWeight: "500", color: "gray" }}
                   >
@@ -238,7 +280,7 @@ const CartScreen = () => {
                   <Text
                     style={{ fontSize: 18, fontWeight: "500", color: "gray" }}
                   >
-                    Selected Date
+                    Address
                   </Text>
                   <Text
                     style={{
@@ -247,7 +289,7 @@ const CartScreen = () => {
                       color: "#088F8F",
                     }}
                   >
-                    {/* {route.params.pickUpDate} */}
+                    {route.params.address}
                   </Text>
                 </View>
 
@@ -261,9 +303,8 @@ const CartScreen = () => {
                   <Text
                     style={{ fontSize: 18, fontWeight: "500", color: "gray" }}
                   >
-                    No Of Days
+                    Pickup Date
                   </Text>
-
                   <Text
                     style={{
                       fontSize: 18,
@@ -271,7 +312,7 @@ const CartScreen = () => {
                       color: "#088F8F",
                     }}
                   >
-                    {route.params.no_Of_days}
+                    {route.params.pickUpDate}
                   </Text>
                 </View>
 
@@ -286,7 +327,7 @@ const CartScreen = () => {
                   <Text
                     style={{ fontSize: 18, fontWeight: "500", color: "gray" }}
                   >
-                    Selected Pick Up Time
+                    Pick Up Time
                   </Text>
 
                   <Text
@@ -299,6 +340,31 @@ const CartScreen = () => {
                     {route.params.selectedTime}
                   </Text>
                 </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text
+                    style={{ fontSize: 18, fontWeight: "500", color: "gray" }}
+                  >
+                    Delivery Date
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "400",
+                      color: "#088F8F",
+                    }}
+                  >
+                    {route.params.no_Of_days}
+                  </Text>
+                </View>
+
                 <View
                   style={{
                     borderColor: "gray",
@@ -320,7 +386,7 @@ const CartScreen = () => {
                     To Pay
                   </Text>
                   <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                    {total + 95}
+                    ₹ {total + 50}
                   </Text>
                 </View>
               </View>
@@ -343,19 +409,9 @@ const CartScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <View>
+          <View style={{ marginVertical: 12 }}>
             <Text style={{ fontSize: 17, fontWeight: "600", color: "white" }}>
-              {cart.length} items | $ {total}
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "400",
-                color: "white",
-                marginVertical: 6,
-              }}
-            >
-              Extra charges might apply
+              {cart.length} items | ₹ {total + 50}
             </Text>
           </View>
 

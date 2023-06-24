@@ -134,7 +134,7 @@ const HomeScreen = () => {
             <Image
               style={{ width: 40, height: 40, borderRadius: 20 }}
               source={{
-                uri: "https://lh3.googleusercontent.com/ogw/AAEL6sh_yqHq38z35QMy5Fnb8ZIxicdxCIVM9PeBD2j-=s64-c-mo",
+                uri: "https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png",
               }}
             />
           </Pressable>
@@ -184,7 +184,7 @@ const HomeScreen = () => {
         >
           <View>
             <Text style={{ fontSize: 17, fontWeight: "600", color: "white" }}>
-              {cart.length} items | $ {total}
+              {cart.length} items | ₹ {total}
             </Text>
             <Text
               style={{

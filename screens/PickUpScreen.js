@@ -9,20 +9,34 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
-import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepicker";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 const PickUpScreen = () => {
   const [selectedDate, setSelectedDate] = useState([]);
-  console.log(selectedDate);
-  console.log(selectedTime);
+  const [selectedTime, setSelectedTime] = useState([]);
+  const [delivery, setDelivery] = useState([]);
+  const [address, setAdresss] = useState("");
+
   const cart = useSelector((state) => state.cart.cart);
   const total = cart
     .map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
-  const [selectedTime, setSelectedTime] = useState([]);
-  const [delivery, setDelivery] = useState([]);
+
+  const date = [
+    {
+      id: "0",
+      time: "Anytime",
+    },
+    {
+      id: "1",
+      time: "Today",
+    },
+    {
+      id: "2",
+      time: "Tomorrow",
+    },
+  ];
 
   const deliveryTime = [
     {
@@ -54,28 +68,30 @@ const PickUpScreen = () => {
     },
     {
       id: "1",
-      time: "12:00 AM",
+      time: "12:00 PM",
     },
     {
       id: "2",
-      time: "1:00 PM",
+      time: "01:00 PM",
     },
     {
       id: "3",
-      time: "2:00 PM",
+      time: "02:00 PM",
     },
     {
       id: "4",
-      time: "3:00 PM",
+      time: "03:00 PM",
     },
     {
       id: "5",
-      time: "4:00 PM",
+      time: "04:00 PM",
     },
   ];
+
   const navigation = useNavigation();
+
   const proceedToCart = () => {
-    if (!selectedDate || !selectedTime || !delivery) {
+    if (!selectedDate && !selectedTime && !delivery && !address) {
       Alert.alert(
         "Empty or invalid",
         "Please select all the fields",
@@ -90,8 +106,9 @@ const PickUpScreen = () => {
         { cancelable: false }
       );
     }
-    if (selectedDate && selectedTime && delivery) {
+    if (selectedDate && selectedTime && delivery && address) {
       navigation.replace("Cart", {
+        address: address,
         pickUpDate: selectedDate,
         selectedTime: selectedTime,
         no_Of_days: delivery,
@@ -101,11 +118,26 @@ const PickUpScreen = () => {
   return (
     <>
       <SafeAreaView style={{ marginTop: 50 }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: "500",
+            marginHorizontal: 10,
+            marginVertical: 30,
+          }}
+        >
+          Pickup Details
+        </Text>
+
         <Text style={{ fontSize: 16, fontWeight: "500", marginHorizontal: 10 }}>
           Enter Address
         </Text>
         <TextInput
+          value={address}
+          onChangeText={(text) => setAdresss(text)}
+          placeholderTextColor="black"
           style={{
+            fontSize: 16,
             padding: 10,
             borderColor: "gray",
             borderWidth: 0.7,
@@ -118,22 +150,35 @@ const PickUpScreen = () => {
         <Text style={{ fontSize: 16, fontWeight: "500", marginHorizontal: 10 }}>
           Pick Up Date
         </Text>
-        <HorizontalDatepicker
-          mode="gregorian"
-          startDate={new Date("2023-02-21")}
-          endDate={new Date("2023-02-28")}
-          initialSelectedDate={new Date("2020-08-22")}
-          onSelectedDateChange={(date) => setSelectedDate(date)}
-          selectedItemWidth={170}
-          unselectedItemWidth={38}
-          itemHeight={38}
-          itemRadius={10}
-          selectedItemTextStyle={styles.selectedItemTextStyle}
-          unselectedItemTextStyle={styles.selectedItemTextStyle}
-          selectedItemBackgroundColor="#222831"
-          unselectedItemBackgroundColor="#ececec"
-          flatListContainerStyle={styles.flatListContainerStyle}
-        />
+
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {date.map((item, index) => (
+            <Pressable
+              key={index}
+              onPress={() => setSelectedDate(item.time)}
+              style={
+                selectedDate.includes(item.time)
+                  ? {
+                      margin: 10,
+                      borderRadius: 7,
+                      padding: 15,
+                      borderColor: "#2596be",
+                      backgroundColor: "#2596be",
+                      borderWidth: 0.7,
+                    }
+                  : {
+                      margin: 10,
+                      borderRadius: 7,
+                      padding: 15,
+                      borderColor: "gray",
+                      borderWidth: 0.7,
+                    }
+              }
+            >
+              <Text>{item.time}</Text>
+            </Pressable>
+          ))}
+        </ScrollView>
 
         <Text style={{ fontSize: 16, fontWeight: "500", marginHorizontal: 10 }}>
           Select Time
@@ -150,8 +195,8 @@ const PickUpScreen = () => {
                       margin: 10,
                       borderRadius: 7,
                       padding: 15,
-                      borderColor: "red",
-                      backgroundColor: "red",
+                      borderColor: "#2596be",
+                      backgroundColor: "#2596be",
                       borderWidth: 0.7,
                     }
                   : {
@@ -181,8 +226,8 @@ const PickUpScreen = () => {
                       margin: 10,
                       borderRadius: 7,
                       padding: 15,
-                      borderColor: "red",
-                      backgroundColor: "red",
+                      borderColor: "#2596be",
+                      backgroundColor: "#2596be",
                       borderWidth: 0.7,
                     }
                   : {
@@ -218,7 +263,7 @@ const PickUpScreen = () => {
         >
           <View>
             <Text style={{ fontSize: 17, fontWeight: "600", color: "white" }}>
-              {cart.length} items | $ {total}
+              {cart.length} items | ₹ {total}
             </Text>
             <Text
               style={{
